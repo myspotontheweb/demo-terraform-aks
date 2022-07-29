@@ -14,7 +14,7 @@ resource "azurerm_kubernetes_cluster" "scoil-mark-1" {
   name                = "scoil-mark-1-aks1"
   location            = azurerm_resource_group.scoil-mark-1.location
   resource_group_name = azurerm_resource_group.scoil-mark-1.name
-  dns_prefix          = "scoil-mark"
+  dns_prefix          = "scoilmark"
   kubernetes_version  = "1.23.8"
 
   default_node_pool {
