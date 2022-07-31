@@ -5,3 +5,5 @@ terraform.tfstate.backup
 terraform.tfvars
 kubeconfig
 *.swp
+Chart.lock
+charts/

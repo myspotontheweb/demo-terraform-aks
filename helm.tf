@@ -17,15 +17,14 @@ resource "helm_release" "nginx_ingress" {
 }
 
 resource "helm_release" "cert-manager" {
-  name             = "cert-manager"
-  namespace        = "kube-addons"
-  repository       = "https://charts.jetstack.io"
-  chart            = "cert-manager"
-  version          = "v1.8.0"
-  create_namespace = true
+  name              = "cert-manager"
+  namespace         = "kube-addons"
+  chart             = "./addons/cert-manager-umbrella"
+  create_namespace  = true
+  dependency_update = true
 
   set {
-    name  = "installCRDs"
+    name  = "cert-manager.installCRDs"
     value = true
   }
 }
