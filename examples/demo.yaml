@@ -48,7 +48,7 @@ metadata:
     cert-manager.io/cluster-issuer: production-http-issuer
 spec:
   rules:
-  - host: nginx.carter-staging.avayacloud.com
+  - host: nginx.demo-staging.example.com
     http:
       paths:
       - path: /
@@ -60,5 +60,5 @@ spec:
                number: 80
   tls:
   - hosts:
-    - nginx.carter-staging.avayacloud.com
+    - nginx.demo-staging.example.com
     secretName: nginx-tls
