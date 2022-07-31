@@ -22,11 +22,6 @@ resource "helm_release" "cert-manager" {
   chart             = "./addons/cert-manager-umbrella"
   create_namespace  = true
   dependency_update = true
-
-  set {
-    name  = "cert-manager.installCRDs"
-    value = true
-  }
 }
 
 data "azurerm_dns_zone" "dns" {
