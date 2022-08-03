@@ -3,7 +3,7 @@ kind: ClusterIssuer
 metadata:
   name: staging-http-issuer
   labels:
-    {{- include "cert-manager-umbrella.labels" . | nindent 4 }}
+    {{- include "cluster-issuers.labels" . | nindent 4 }}
 spec:
   acme:
     server: https://acme-staging-v02.api.letsencrypt.org/directory

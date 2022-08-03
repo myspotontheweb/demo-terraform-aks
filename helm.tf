@@ -16,14 +16,6 @@ resource "helm_release" "nginx_ingress" {
   create_namespace = true
 }
 
-resource "helm_release" "cert-manager" {
-  name              = "cert-manager"
-  namespace         = "kube-addons"
-  chart             = "./addons/cert-manager-umbrella"
-  create_namespace  = true
-  dependency_update = true
-}
-
 data "azurerm_dns_zone" "dns" {
   name                = var.dns_zone_name
   resource_group_name = var.dns_zone_resource_group_name
@@ -79,5 +71,29 @@ resource "helm_release" "external-dns" {
     name  = "azure.userAssignedIdentityID"
     value = azurerm_kubernetes_cluster.aks.kubelet_identity[0].client_id
   }
+}
+
+resource "helm_release" "cert-manager" {
+  name             = "cert-manager"
+  namespace        = "kube-addons"
+  repository       = "https://charts.jetstack.io"
+  chart            = "cert-manager"
+  version          = "v1.8.0"
+  create_namespace = true
+
+  set {
+    name  = "installCRDs"
+    value = true
+  }
+}
+
+resource "helm_release" "cluster-issuers" {
+  name              = "cert-issuers"
+  namespace         = "kube-addons"
+  chart             = "./addons/cluster-issuers"
+  create_namespace  = true
+  dependency_update = false
+
+  depends_on = [helm_release.cert-manager]
 }
 
