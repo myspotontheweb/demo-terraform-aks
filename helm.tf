@@ -53,7 +53,7 @@ resource "helm_release" "external-dns" {
   }
   set {
     name  = "txtOwnerId"
-    value = "scoil-mark-1"
+    value = var.name
   }
   set {
     name  = "policy"

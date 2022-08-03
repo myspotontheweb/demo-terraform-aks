@@ -3,23 +3,23 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "scoil-mark-1"
-  location = "West Europe"
+  name     = var.name
+  location = var.resource_group_location
 }
 
 resource "azurerm_container_registry" "acr" {
-  name                = "scoilmarkdev"
+  name                = var.registry_name
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   sku                 = "Basic"
 }
 
 resource "azurerm_kubernetes_cluster" "aks" {
-  name                = "scoil-mark-1-aks1"
+  name                = var.name
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-  dns_prefix          = "scoilmark"
-  kubernetes_version  = "1.23.8"
+  dns_prefix          = var.name
+  kubernetes_version  = var.kubernetes_version
 
   default_node_pool {
     name       = "default"
@@ -32,7 +32,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     type = "SystemAssigned"
   }
   tags = {
-    Environment = "Development"
+    Environment = var.environment_tag
   }
 }
 
